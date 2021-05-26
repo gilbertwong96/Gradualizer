@@ -11,6 +11,11 @@ jobs:
       - name: Check Out
         uses: actions/checkout@v2
 
+      - name: test env
+        # env:
+        #   HEX_API_KEY:
+        run: echo ${{ secrets.HEX_API_KEY }}
+
       - name: Publish to Hex.pm
         uses: erlangpack/github-action@v1
         env:
