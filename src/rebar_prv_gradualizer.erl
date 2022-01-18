@@ -52,6 +52,8 @@ files_to_check(App) ->
     GOpts = rebar_app_info:get(App, gradualizer_opts, []),
     Include = proplists:get_value(include, GOpts, undefined),
     Exclude = proplists:get_value(exclude, GOpts, []),
+    rebar_log:log(info, "Exclude: ~p", [Exclude]),
+    %% io:format("Exclude Options: ~p~n", [Exclude]),
     Cwd = rebar_app_info:dir(App),
 
     Patterns = case Include of
@@ -76,6 +78,7 @@ files_to_check(App) ->
     ExpandedExclude = lists:flatmap(fun (Pattern) ->
                 filelib:wildcard(filename:absname(Pattern, Cwd))
             end, Exclude),
+    rebar_log:log(info, "Exclude files: ~p", [Exclude]),
     lists:filter(
         fun (File) ->
             not lists:member(File, ExpandedExclude)
